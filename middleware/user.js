@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
-const { findOneByEmail } = require("../models/users");
+const { findOneByEmail } = require('../models/users');
 
 const getPassword = (req, res, next) => {
   findOneByEmail(req.body.email)
@@ -9,11 +9,11 @@ const getPassword = (req, res, next) => {
         req.body = { ...req.body, ...user };
         next();
       } else {
-        res.status(404).send("Invalid credentials");
+        res.status(404).send('Invalid credentials');
       }
     })
     .catch((err) => {
-      res.status(500).send("Error retrieving data");
+      res.status(500).send('Error retrieving data');
     });
 };
 
@@ -23,11 +23,11 @@ const checkAuth = (req, res, next) => {
     process.env.PRIVATE_KEY,
     (err, decoded) => {
       if (err) {
-        res.status(401).send("You do not have correct rights");
+        res.status(401).send('You do not have correct rights');
       } else {
         next();
       }
-    }
+    },
   );
 };
 
