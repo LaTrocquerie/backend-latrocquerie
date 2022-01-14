@@ -3,10 +3,9 @@ const {
   findOne,
 } = require('../models/data');
 
-router.get('/:page', (req, res) => {
-  findOne(req.params.page)
-    .then((result) => res.status(200).json(result))
-    .catch((err) => console.log(err));
+router.get('/:page', async (req, res) => {
+  const result = await findOne(req.params.page);
+  res.status(200).json(result);
 });
 
 module.exports = router;
