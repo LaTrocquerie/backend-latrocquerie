@@ -110,7 +110,17 @@ const findProduct = async (id) => {
 
 const findContact = async (id) => {
   try {
-    return await db.query('SELECT * FROM contact WHERE id_pages = ?', [id]);
+    const contact = await db.query('SELECT * FROM contact WHERE id_pages = ?', [id]);
+    const reseaux = [];
+    for (let i = 0; i < contact[0].length; i++) {
+      const reseauxProvisoire = await db.query('SELECT * FROM reseaux WHERE id_contact = ?', [contact[0][i].id_contact]);
+      const contactProvisoire = {
+        contact: contact[0][i],
+        details: reseauxProvisoire[0],
+      };
+      reseaux.push(contactProvisoire);
+    }
+    return reseaux;
   } catch (error) {
     console.error(error);
   }
@@ -135,7 +145,7 @@ const findOne = async (nomdepage) => {
         ...clients,
         ...articleImage[0],
         ...categorie,
-        ...contact[0],
+        ...contact,
         ...objets,
         ...products,
       ],
