@@ -31,17 +31,17 @@ const findAbonnement = async (id) => {
       //console.log(abonnement[0][i]);
 
       const aboProvisoire = {
-        abonnement: abonnement[0][i],
-        details: detailsProvisoire[0],
+        component: "abonnement",
+        data: {
+          ...abonnement[0][i],
+          details: detailsProvisoire[0],
+        },
       };
-      console.log(detailsProvisoire[0]);
+      //console.log(detailsProvisoire[0]);
       abonnementDetail.push(aboProvisoire);
     }
-    console.log(abonnementDetail);
-    return abonnement.map((abonnement) => ({
-      component: "abonnement",
-      data: abonnement,
-    }));
+    //console.log(abonnementDetail);
+    return abonnementDetail;
     // return abonnementDetail.map((abonnementDetail) => ({
     //   component: "abonnementDetail",
     //   data: abonnementDetail,
@@ -57,14 +57,18 @@ const findClient = async (id) => {
       id,
     ]);
     const clientsDetail = [];
+    //console.log(clients);
     for (let i = 0; i < clients[0].length; i++) {
       const detailsProvisoire = await db.query(
-        "SELECT * FROM clients_details WHERE id_client = ?",
-        [clients[0][i].id_client]
+        "SELECT * FROM clients_details WHERE id_clients = ?",
+        [clients[0][i].id_clients]
       );
       const clientsProvisoire = {
-        clients: clients[0][i],
-        details: detailsProvisoire[0],
+        component: "client",
+        data: {
+          ...clients[0][i],
+          details: detailsProvisoire[0],
+        },
       };
       clientsDetail.push(clientsProvisoire);
     }
@@ -102,8 +106,11 @@ const findCategorie = async (id) => {
         [categorie[0][i].id_categorie]
       );
       const categorieProvisoire = {
-        categorie: categorie[0][i],
-        details: gommettesProvisoire[0],
+        component: "categorie",
+        data: {
+          ...categorie[0][i],
+          details: gommettesProvisoire[0],
+        },
       };
       gommettes.push(categorieProvisoire);
     }
@@ -125,8 +132,11 @@ const findObjet = async (id) => {
         [objets[0][i].id_objets]
       );
       const objetsProvisoire = {
-        objets: objets[0][i],
-        details: detailsProvisoire[0],
+        component: "objets",
+        data: {
+          ...objets[0][i],
+          details: detailsProvisoire[0],
+        },
       };
       objetsDetail.push(objetsProvisoire);
     }
@@ -149,8 +159,11 @@ const findProduct = async (id) => {
         [products[0][i].id_products]
       );
       const productsProvisoire = {
-        products: products[0][i],
-        details: detailsProvisoire[0],
+        component: "product",
+        data: {
+          ...products[0][i],
+          details: detailsProvisoire[0],
+        },
       };
       productsDetail.push(productsProvisoire);
     }
@@ -160,28 +173,7 @@ const findProduct = async (id) => {
   }
 };
 
-const findContact = async (id) => {
-  try {
-    const contact = await db.query("SELECT * FROM contact WHERE id_pages = ?", [
-      id,
-    ]);
-    const reseaux = [];
-    for (let i = 0; i < contact[0].length; i++) {
-      const reseauxProvisoire = await db.query(
-        "SELECT * FROM reseaux WHERE id_contact = ?",
-        [contact[0][i].id_contact]
-      );
-      const contactProvisoire = {
-        contact: contact[0][i],
-        details: reseauxProvisoire[0],
-      };
-      reseaux.push(contactProvisoire);
-    }
-    return reseaux;
-  } catch (error) {
-    console.error(error);
-  }
-};
+
 
 const findOne = async (nomdepage) => {
   try {
@@ -193,7 +185,6 @@ const findOne = async (nomdepage) => {
     const clients = await findClient(page[0][0].id_pages);
     const articleImage = await findArticleImage(page[0][0].id_pages);
     const categorie = await findCategorie(page[0][0].id_pages);
-    const contact = await findContact(page[0][0].id_pages);
     const objets = await findObjet(page[0][0].id_pages);
     const products = await findProduct(page[0][0].id_pages);
     return {
@@ -201,12 +192,11 @@ const findOne = async (nomdepage) => {
       components: [
         ...article,
         ...abonnement,
-        // ...clients,
+        ...clients,
         ...articleImage,
-        // ...categorie,
-        // ...contact,
-        // ...objets,
-        // ...products,
+        ...categorie,
+        ...objets,
+        ...products,
       ],
     };
   } catch (error) {
