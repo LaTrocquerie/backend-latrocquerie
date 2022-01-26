@@ -28,7 +28,6 @@ const findAbonnement = async (id) => {
         "SELECT * FROM abonnements_details WHERE id_abonnements = ?",
         [abonnement[0][i].id_abonnements]
       );
-      //console.log(abonnement[0][i]);
 
       const aboProvisoire = {
         component: "abonnement",
@@ -37,15 +36,9 @@ const findAbonnement = async (id) => {
           details: detailsProvisoire[0],
         },
       };
-      //console.log(detailsProvisoire[0]);
       abonnementDetail.push(aboProvisoire);
     }
-    //console.log(abonnementDetail);
     return abonnementDetail;
-    // return abonnementDetail.map((abonnementDetail) => ({
-    //   component: "abonnementDetail",
-    //   data: abonnementDetail,
-    // }));
   } catch (error) {
     console.error(error);
   }
@@ -57,7 +50,6 @@ const findClient = async (id) => {
       id,
     ]);
     const clientsDetail = [];
-    //console.log(clients);
     for (let i = 0; i < clients[0].length; i++) {
       const detailsProvisoire = await db.query(
         "SELECT * FROM clients_details WHERE id_clients = ?",
@@ -172,8 +164,6 @@ const findProduct = async (id) => {
     console.error(error);
   }
 };
-
-
 
 const findOne = async (nomdepage) => {
   try {
