@@ -9,9 +9,9 @@ const { setupRoutes } = require("./routes");
 
 const PORT = process.env.PORT || 8000;
 
-connection.connect((err) => {
+connection.getConnection((err, conn) => {
   if (err) console.log("Erreur de connexion à la DB", err);
-  else console.log(`Connexion à la DB ok, id${connection.threadId}`);
+  else console.log(`Connexion à la DB ok, id${conn.threadId}`);
 });
 
 // middleware
