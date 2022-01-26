@@ -1,20 +1,22 @@
-const express = require('express');
-require('dotenv').config();
+const express = require("express");
+require("dotenv").config();
+const cors = require("cors");
 
 const app = express();
-const connection = require('./db-config');
+const connection = require("./db-config");
 
-const { setupRoutes } = require('./routes');
+const { setupRoutes } = require("./routes");
 
 const PORT = process.env.PORT || 8000;
 
 connection.connect((err) => {
-  if (err) console.log('Erreur de connexion à la DB', err);
+  if (err) console.log("Erreur de connexion à la DB", err);
   else console.log(`Connexion à la DB ok, id${connection.threadId}`);
 });
 
 // middleware
 app.use(express.json());
+app.use(cors());
 
 setupRoutes(app);
 
