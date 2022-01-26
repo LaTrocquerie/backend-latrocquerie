@@ -2,24 +2,17 @@ const connection = require("../db-config");
 
 const db = connection.promise();
 
-const getContact = async (id) => {
+const getContact = async () => {
   try {
-    const contact = await db.query("SELECT * FROM contact WHERE id_pages = ?", [
-      id,
-    ]);
-    const reseaux = [];
-    for (let i = 0; i < contact[0].length; i++) {
-      const reseauxProvisoire = await db.query(
-        "SELECT * FROM reseaux WHERE id_contact = ?",
-        [contact[0][i].id_contact]
-      );
-      const contactProvisoire = {
-        contact: contact[0][i],
-        details: reseauxProvisoire[0],
-      };
-      reseaux.push(contactProvisoire);
-    }
-    return reseaux;
+    const contact = await db.query("SELECT * FROM contact");
+    const reseaux = await db.query("SELECT * FROM reseaux");
+    const horaires = await db.query("SELECT * FROM horaires");
+
+    return {
+      ...contact[0][0],
+      reseaux: reseaux[0],
+      horaires: horaires[0],
+    };
   } catch (error) {
     console.error(error);
   }
@@ -28,3 +21,5 @@ const getContact = async (id) => {
 module.exports = {
   getContact,
 };
+
+// fusion des données de contact dans le footer
