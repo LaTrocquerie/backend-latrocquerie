@@ -9,6 +9,7 @@ const { setupRoutes } = require("./routes");
 
 const PORT = process.env.PORT || 8000;
 
+// paramétrage d'une nouvelle connexion (getConnection)
 connection.getConnection((err, conn) => {
   if (err) console.log("Erreur de connexion à la DB", err);
   else console.log(`Connexion à la DB ok, id${conn.threadId}`);
