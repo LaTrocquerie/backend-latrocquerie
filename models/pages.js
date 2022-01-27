@@ -1,14 +1,14 @@
-const connection = require("../db-config");
+const connection = require('../db-config');
 
 const db = connection.promise();
 
 const findArticle = async (id) => {
   try {
-    const article = await db.query("SELECT * FROM article WHERE id_pages = ?", [
+    const article = await db.query('SELECT * FROM article WHERE id_pages = ?', [
       id,
     ]);
     return article[0].map((article) => ({
-      component: "article",
+      component: 'article',
       data: article,
     }));
   } catch (error) {
@@ -19,18 +19,18 @@ const findArticle = async (id) => {
 const findAbonnement = async (id) => {
   try {
     const abonnement = await db.query(
-      "SELECT * FROM abonnements WHERE id_pages = ?",
-      [id]
+      'SELECT * FROM abonnements WHERE id_pages = ?',
+      [id],
     );
     const abonnementDetail = [];
     for (let i = 0; i < abonnement[0].length; i++) {
       const detailsProvisoire = await db.query(
-        "SELECT * FROM abonnements_details WHERE id_abonnements = ?",
-        [abonnement[0][i].id_abonnements]
+        'SELECT * FROM abonnements_details WHERE id_abonnements = ?',
+        [abonnement[0][i].id_abonnements],
       );
 
       const aboProvisoire = {
-        component: "abonnement",
+        component: 'abonnement',
         data: {
           ...abonnement[0][i],
           details: detailsProvisoire[0],
@@ -46,17 +46,17 @@ const findAbonnement = async (id) => {
 
 const findClient = async (id) => {
   try {
-    const clients = await db.query("SELECT * FROM clients WHERE id_pages = ?", [
+    const clients = await db.query('SELECT * FROM clients WHERE id_pages = ?', [
       id,
     ]);
     const clientsDetail = [];
     for (let i = 0; i < clients[0].length; i++) {
       const detailsProvisoire = await db.query(
-        "SELECT * FROM clients_details WHERE id_clients = ?",
-        [clients[0][i].id_clients]
+        'SELECT * FROM clients_details WHERE id_clients = ?',
+        [clients[0][i].id_clients],
       );
       const clientsProvisoire = {
-        component: "client",
+        component: 'client',
         data: {
           ...clients[0][i],
           details: detailsProvisoire[0],
@@ -73,11 +73,11 @@ const findClient = async (id) => {
 const findArticleImage = async (id) => {
   try {
     const articleimage = await db.query(
-      "SELECT * FROM articleimage WHERE id_pages = ?",
-      [id]
+      'SELECT * FROM articleimage WHERE id_pages = ?',
+      [id],
     );
     return articleimage[0].map((articleImage) => ({
-      component: "articleImage",
+      component: 'articleImage',
       data: articleImage,
     }));
   } catch (error) {
@@ -88,17 +88,17 @@ const findArticleImage = async (id) => {
 const findCategorie = async (id) => {
   try {
     const categorie = await db.query(
-      "SELECT * FROM categorie WHERE id_pages = ?",
-      [id]
+      'SELECT * FROM categorie WHERE id_pages = ?',
+      [id],
     );
     const gommettes = [];
     for (let i = 0; i < categorie[0].length; i++) {
       const gommettesProvisoire = await db.query(
-        "SELECT * FROM gommettes WHERE id_categorie = ?",
-        [categorie[0][i].id_categorie]
+        'SELECT * FROM gommettes WHERE id_categorie = ?',
+        [categorie[0][i].id_categorie],
       );
       const categorieProvisoire = {
-        component: "categorie",
+        component: 'categorie',
         data: {
           ...categorie[0][i],
           details: gommettesProvisoire[0],
@@ -114,17 +114,17 @@ const findCategorie = async (id) => {
 
 const findObjet = async (id) => {
   try {
-    const objets = await db.query("SELECT * FROM objets WHERE id_pages = ?", [
+    const objets = await db.query('SELECT * FROM objets WHERE id_pages = ?', [
       id,
     ]);
     const objetsDetail = [];
     for (let i = 0; i < objets[0].length; i++) {
       const detailsProvisoire = await db.query(
-        "SELECT * FROM objets_details WHERE id_objets = ?",
-        [objets[0][i].id_objets]
+        'SELECT * FROM objets_details WHERE id_objets = ?',
+        [objets[0][i].id_objets],
       );
       const objetsProvisoire = {
-        component: "objets",
+        component: 'objets',
         data: {
           ...objets[0][i],
           details: detailsProvisoire[0],
@@ -141,17 +141,17 @@ const findObjet = async (id) => {
 const findProduct = async (id) => {
   try {
     const products = await db.query(
-      "SELECT * FROM products WHERE id_pages = ?",
-      [id]
+      'SELECT * FROM products WHERE id_pages = ?',
+      [id],
     );
     const productsDetail = [];
     for (let i = 0; i < products[0].length; i++) {
       const detailsProvisoire = await db.query(
-        "SELECT * FROM products_details WHERE id_products = ?",
-        [products[0][i].id_products]
+        'SELECT * FROM products_details WHERE id_products = ?',
+        [products[0][i].id_products],
       );
       const productsProvisoire = {
-        component: "product",
+        component: 'product',
         data: {
           ...products[0][i],
           details: detailsProvisoire[0],
@@ -167,7 +167,7 @@ const findProduct = async (id) => {
 
 const findOne = async (nomdepage) => {
   try {
-    const page = await db.query("SELECT * FROM pages WHERE nom = ?", [
+    const page = await db.query('SELECT * FROM pages WHERE nom = ?', [
       nomdepage,
     ]);
     const article = await findArticle(page[0][0].id_pages);

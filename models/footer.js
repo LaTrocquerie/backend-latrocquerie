@@ -1,12 +1,12 @@
-const connection = require("../db-config");
+const connection = require('../db-config');
 
 const db = connection.promise();
 
 const getContact = async () => {
   try {
-    const contact = await db.query("SELECT * FROM contact");
-    const reseaux = await db.query("SELECT * FROM reseaux");
-    const horaires = await db.query("SELECT * FROM horaires");
+    const contact = await db.query('SELECT * FROM contact');
+    const reseaux = await db.query('SELECT * FROM reseaux');
+    const horaires = await db.query('SELECT * FROM horaires');
 
     return {
       ...contact[0][0],
