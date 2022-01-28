@@ -6,7 +6,7 @@ const app = express();
 const multer = require("multer");
 const connection = require("./db-config");
 
-// const { setupRoutes } = require("./routes");
+const { setupRoutes } = require("./routes");
 
 const PORT = process.env.PORT || 8000;
 
@@ -20,7 +20,7 @@ connection.getConnection((err, conn) => {
 app.use(express.json());
 app.use(cors());
 
-// setupRoutes(app);
+setupRoutes(app);
 app.get("/", (req, res) => {
   res.send("app qui tourne");
 });
