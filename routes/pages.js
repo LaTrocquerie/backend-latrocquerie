@@ -1,5 +1,5 @@
 const routerPages = require("express").Router();
-const { findOne } = require("../models/pages");
+const { findOne, createOne } = require("../models/pages");
 
 // Route GET
 
