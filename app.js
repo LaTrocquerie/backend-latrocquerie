@@ -20,10 +20,10 @@ connection.getConnection((err, conn) => {
 app.use(express.json());
 app.use(cors());
 
-setupRoutes(app);
 app.get("/", (req, res) => {
   res.send("app qui tourne");
 });
+setupRoutes(app);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
