@@ -5,8 +5,10 @@ const { findOne, createOne } = require("../models/pages");
 
 routerPages.get("/:page", async (req, res) => {
   const result = await findOne(req.params.page);
-  // result.sort(findOne);
-  // console.log(result);
+  result.components.sort((a, b) => {
+    return a.data.bloc_order - b.data.bloc_order;
+  });
+
   res.status(200).json(result);
 });
 
