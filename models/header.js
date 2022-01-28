@@ -1,10 +1,8 @@
-const connection = require("../db-config");
+const connection = require('../db-config');
 
 const db = connection.promise();
 
-const getHeader = () => {
-  return "header";
-};
+const getHeader = () => 'header';
 
 module.exports = {
   getHeader,

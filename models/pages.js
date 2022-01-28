@@ -18,7 +18,7 @@ const connection = require("../db-config");
 const db = connection.promise();
 const findOne = async (nomdepage) => {
   try {
-    const page = await db.query("SELECT * FROM pages WHERE nom = ?", [
+    const page = await db.query('SELECT * FROM pages WHERE nom = ?', [
       nomdepage,
     ]);
     const article = await findArticle(page[0][0].id_pages);
