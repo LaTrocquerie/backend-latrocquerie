@@ -6,7 +6,7 @@ const app = express();
 const multer = require("multer");
 const connection = require("./db-config");
 
-const { setupRoutes } = require("./routes");
+const { setupRoutes } = require("./routes/index.js");
 
 const PORT = process.env.PORT || 8000;
 
