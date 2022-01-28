@@ -1,18 +1,17 @@
-const express = require("express");
-require("dotenv").config();
-const cors = require("cors");
+const express = require('express');
+require('dotenv').config();
+const cors = require('cors');
 
 const app = express();
-const multer = require("multer");
-const connection = require("./db-config");
+const connection = require('./db-config');
 
-const { setupRoutes } = require("./routes/index.js");
+const { setupRoutes } = require('./routes/index');
 
 const PORT = process.env.PORT || 8000;
 
 // paramétrage d'une nouvelle connexion (getConnection)
 connection.getConnection((err, conn) => {
-  if (err) console.log("Erreur de connexion à la DB", err);
+  if (err) console.log('Erreur de connexion à la DB', err);
   else console.log(`Connexion à la DB ok, id${conn.threadId}`);
 });
 
@@ -20,33 +19,11 @@ connection.getConnection((err, conn) => {
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.send("app qui tourne");
+app.get('/', (req, res) => {
+  res.send('app qui tourne');
 });
 setupRoutes(app);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-});
-
-const storage = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, "../frontend_latrocquerie/public/assets/images");
-  },
-  filename: (req, file, callback) => {
-    const provisoireFileName = file.originalname.split(".");
-    const date = Date.now();
-    req.newName = `${provisoireFileName[0]}_${date}.${provisoireFileName[1]}`;
-    callback(null, req.newName);
-  },
-});
-
-const upload = multer({ storage });
-
-app.get("/upload", (req, res) => {
-  res.json(req.body);
-});
-
-app.post("/upload", upload.single("file"), (req, res) => {
-  res.json(`./assets/images/${req.newName}`);
 });
