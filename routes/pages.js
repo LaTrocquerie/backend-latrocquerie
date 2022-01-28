@@ -5,6 +5,8 @@ const { findOne, createOne } = require("../models/pages");
 
 routerPages.get("/:page", async (req, res) => {
   const result = await findOne(req.params.page);
+  // result.sort(findOne);
+  // console.log(result);
   res.status(200).json(result);
 });
 
