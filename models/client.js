@@ -28,6 +28,23 @@ const findClient = async (id) => {
   }
 };
 
+
+
+// PUT
+
+const updateClient = async (data) => {
+  try {
+    const client = await db.query(
+      "UPDATE clients SET ? WHERE id_clients = ?",
+      [data, data.id_clients]
+    );
+    console.log(client);
+    return client;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   findClient,
 };

@@ -17,19 +17,19 @@ const findArticle = async (id) => {
   }
 };
 
-const updateArticle = async (body) => {
-  console.log(body);
-  db.query("UPDATE article SET ? WHERE id_article = ?", [body]);
-  return "Article correctement mis à jour";
+const updateArticle = async (data) => {
+  try {
+    const article = await db.query(
+      "UPDATE article SET ? WHERE id_article = ?",
+      [data, data.id_article]
+    );
 
-  // return article.forEach((element) => console.log(element));
-
-  // .then((result) => {
-  //   res.send("Article correctement mis à jour !");
-  // })
-  // .catch((error) => {
-  //   console.error(error);
-  // });
+    //const details = {...data.details}
+    // delete data.details
+    return article[0];
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 module.exports = {

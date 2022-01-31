@@ -30,18 +30,39 @@ const findAbonnement = async (id) => {
   }
 };
 
-// const updateAbonnement = async (body) => {
-//   console.log(body);
-//   db.query("UPDATE abonnements SET ? WHERE id_abonnements = ?", [])
-//     .then((result) => {
-//       res.send("Abonnement correctement mis à jour !");
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//     });
-// };
+const updateAbonnementDetail = async (detail) => {
+  return await db
+    .query(
+      "UPDATE abonnements_details SET ? WHERE id_abonnements_details = ?",
+      [detail, detail.id_abonnements_details]
+    )
+    .then((res) => res)
+    .catch((err) => console.log(err));
+};
+
+const updateAbonnement = async (data) => {
+  try {
+    const details = [...data.details];
+    delete data.details;
+    console.log(data);
+    console.log(details);
+    const abonnement = await db.query(
+      "UPDATE abonnements SET ? WHERE id_abonnements = ?",
+      [data, data.id_abonnements]
+    );
+
+    const arr = await Promise.all(
+      details.map(async (detail) => await updateAbonnementDetail(details))
+    );
+    console.log(arr);
+    console.log(abonnement);
+    return abonnement;
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 module.exports = {
   findAbonnement,
-  //updateAbonnement,
+  updateAbonnement,
 };
