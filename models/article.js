@@ -17,6 +17,8 @@ const findArticle = async (id) => {
   }
 };
 
+// UPDATE UN ARTICLE
+
 const updateArticle = async (data) => {
   try {
     const article = await db.query(
@@ -24,8 +26,6 @@ const updateArticle = async (data) => {
       [data, data.id_article]
     );
 
-    //const details = {...data.details}
-    // delete data.details
     return article[0];
   } catch (err) {
     console.log(err);

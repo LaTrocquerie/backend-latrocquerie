@@ -29,6 +29,39 @@ const findCategorie = async (id) => {
   }
 };
 
+// UPDATE UNE CATEGORIE
+
+const updateGommette = async (detail) => {
+  return await db
+    .query("UPDATE gommettes SET ? WHERE id_gommettes = ?", [
+      detail,
+      detail.id_gommettes,
+    ])
+    .then((res) => res)
+    .catch((err) => console.log(err));
+};
+
+const updateCategorie = async (data) => {
+  try {
+    const details = [...data.details];
+    delete data.details;
+    const categorie = await db.query(
+      "UPDATE categorie SET ? WHERE id_categorie = ?",
+      [data, data.id_categorie]
+    );
+
+    const arr = await Promise.all(
+      details.map(async (detail) => await updateGommette(details))
+    );
+    console.log(arr);
+    console.log(categorie);
+    return categorie;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   findCategorie,
+  updateCategorie,
 };

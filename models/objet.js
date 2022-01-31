@@ -28,6 +28,39 @@ const findObjet = async (id) => {
   }
 };
 
+// UPDATE UN OBJET
+
+const updateObjetDetail = async (detail) => {
+  return await db
+    .query("UPDATE objets_details SET ? WHERE id_objets_details = ?", [
+      detail,
+      detail.id_objets_details,
+    ])
+    .then((res) => res)
+    .catch((err) => console.log(err));
+};
+
+const updateObjet = async (data) => {
+  try {
+    const details = [...data.details];
+    delete data.details;
+    const objet = await db.query("UPDATE objets SET ? WHERE id_objets = ?", [
+      data,
+      data.id_objets,
+    ]);
+
+    const arr = await Promise.all(
+      details.map(async (detail) => await updateCl(details))
+    );
+    console.log(arr);
+    console.log(objet);
+    return objet;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   findObjet,
+  updateObjet,
 };

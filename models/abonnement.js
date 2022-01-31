@@ -30,6 +30,8 @@ const findAbonnement = async (id) => {
   }
 };
 
+// UPDATE UN ABONNEMENT
+
 const updateAbonnementDetail = async (detail) => {
   return await db
     .query(
@@ -44,8 +46,6 @@ const updateAbonnement = async (data) => {
   try {
     const details = [...data.details];
     delete data.details;
-    console.log(data);
-    console.log(details);
     const abonnement = await db.query(
       "UPDATE abonnements SET ? WHERE id_abonnements = ?",
       [data, data.id_abonnements]
