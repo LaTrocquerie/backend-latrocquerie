@@ -35,6 +35,7 @@ const updateObjetDetail = async (detail) => {
     .query("UPDATE objets_details SET ? WHERE id_objets_details = ?", [
       detail,
       detail.id_objets_details,
+      console.log(detail),
     ])
     .then((res) => res)
     .catch((err) => console.log(err));
@@ -50,7 +51,7 @@ const updateObjet = async (data) => {
     ]);
 
     const arr = await Promise.all(
-      details.map(async (detail) => await updateCl(details))
+      details.map(async (detail) => await updateObjetDetail(details))
     );
     console.log(arr);
     console.log(objet);

@@ -33,7 +33,7 @@ const findProduct = async (id) => {
 
 const updateProductDetail = async (detail) => {
   return await db
-    .query("UPDATE products SET ? WHERE id_products_details = ?", [
+    .query("UPDATE products_details SET ? WHERE id_products_details = ?", [
       detail,
       detail.id_products_details,
     ])
