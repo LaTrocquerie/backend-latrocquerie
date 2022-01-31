@@ -1,18 +1,18 @@
-const { findArticle } = require('./article');
-const { findAbonnement } = require('./abonnement');
-const { findClient } = require('./client');
-const { findArticleImage } = require('./articleImage');
-const { findCategorie } = require('./categorie');
-const { findProduct } = require('./product');
-const { findObjet } = require('./objet');
+const { findArticle } = require("./article");
+const { findAbonnement } = require("./abonnement");
+const { findClient } = require("./client");
+const { findArticleImage } = require("./articleImage");
+const { findCategorie } = require("./categorie");
+const { findProduct } = require("./product");
+const { findObjet } = require("./objet");
 
-const connection = require('../db-config');
+const connection = require("../db-config");
 
 const db = connection.promise();
 
 const findOne = async (nomdepage) => {
   try {
-    const page = await db.query('SELECT * FROM pages WHERE nom = ?', [
+    const page = await db.query("SELECT * FROM pages WHERE nom = ?", [
       nomdepage,
     ]);
     const article = await findArticle(page[0][0].id_pages);

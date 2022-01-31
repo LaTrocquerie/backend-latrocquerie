@@ -31,7 +31,7 @@
 //     });
 // };
 
-// const createAbonnement = {};
+//const createAbonnement = {};
 // const createOne = async (elementPage) => {
 //   try {
 //     const article = await db.query("INSERT INTO page (id_pages, titre, description, to, nom, cls) VALUES (?, ?, ?, ?, ?, ?)", [elementPage],
