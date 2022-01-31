@@ -30,6 +30,18 @@ const findAbonnement = async (id) => {
   }
 };
 
+// const updateAbonnement = async (body) => {
+//   console.log(body);
+//   db.query("UPDATE abonnements SET ? WHERE id_abonnements = ?", [])
+//     .then((result) => {
+//       res.send("Abonnement correctement mis à jour !");
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//     });
+// };
+
 module.exports = {
   findAbonnement,
+  //updateAbonnement,
 };
