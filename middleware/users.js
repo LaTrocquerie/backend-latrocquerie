@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const Users = require('../models/users');
-
+const { checkJwtAuth } = require('../helpers/users');
 const saltRounds = 10;
 
 const hashedPassword = (password) => {
@@ -30,6 +30,29 @@ const checkPassword = (req, res, next) => {
     .catch(err => res.status(404).json({ msg: 'Invalid Credentials from request' }))
 }
 
+/**
+ * vérification cookie + role
+ */
+const checkAuth = (req, res, next) => {
+  if (req.body.token) {
+    const auth = checkJwtAuth(req.body.token);
+    console.log(auth);
+    if (auth) {
+      Users.findOneByEmail(auth.email)
+        .then(user => {
+          if (user.email === auth.email) next();
+          else res.status(401).json({ msg: 'Unauthorized Path' })
+        })
+        .catch(err => res.status(500).json({ msg: 'Error retrieving data' }))
+    } else {
+      res.status(401).json({ msg: 'Unauthorized Path' })
+    }
+  } else {
+    res.status(401).json({ msg: 'Unauthorized Path' })
+  }
+}
+
 module.exports = {
-  checkPassword
+  checkPassword,
+  checkAuth,
 }

@@ -7,6 +7,7 @@ const { updateClient } = require("../models/client");
 const { updateObjet } = require("../models/objet");
 const { updateProduct } = require("../models/product");
 const { updateCategorie } = require("../models/categorie");
+const { checkAuth } = require('../middleware/users');
 
 // Route GET
 
@@ -22,7 +23,6 @@ routerPages.get("/:page", async (req, res) => {
 });
 
 // Route POST
-
 routerPages.post("/component", async (req, res) => {
   const component = {};
 
@@ -32,7 +32,7 @@ routerPages.post("/component", async (req, res) => {
 
 // Route PUT
 
-routerPages.put("/component", async (req, res) => {
+routerPages.put("/component", checkAuth, async (req, res) => {
   console.log(req.body.component);
 
   const component = {
