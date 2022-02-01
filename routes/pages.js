@@ -34,6 +34,7 @@ routerPages.post("/component", async (req, res) => {
 
 routerPages.put("/component", checkAuth, async (req, res) => {
   console.log(req.body.component);
+  console.log("Route PUT")
 
   const component = {
     article: async () => await updateArticle(req.body.data),
@@ -44,7 +45,7 @@ routerPages.put("/component", checkAuth, async (req, res) => {
     objet: async () => await updateObjet(req.body.data),
     product: async () => await updateProduct(req.body.data),
   };
-  const result = await component[req.body.component];
+  const result = await component[req.body.component]();
   res.status(201).json(result);
 });
 

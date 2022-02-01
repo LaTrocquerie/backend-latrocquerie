@@ -34,9 +34,8 @@ const checkPassword = (req, res, next) => {
  * vérification cookie + role
  */
 const checkAuth = (req, res, next) => {
-  if (req.body.token) {
-    const auth = checkJwtAuth(req.body.token);
-    console.log(auth);
+  if (req.headers.token) {//A changer en headers.user_agent
+    const auth = checkJwtAuth(req.headers.token);//A changer en headers.user_agent
     if (auth) {
       Users.findOneByEmail(auth.email)
         .then(user => {
