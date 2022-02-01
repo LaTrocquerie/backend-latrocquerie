@@ -28,6 +28,39 @@ const findClient = async (id) => {
   }
 };
 
+// UPDATE UN CLIENT
+
+const updateClientDetail = async (detail) => {
+  return await db
+    .query("UPDATE clients_details SET ? WHERE id_clients_details = ?", [
+      detail,
+      detail.id_clients_details,
+    ])
+    .then((res) => res)
+    .catch((err) => console.log(err));
+};
+
+const udpateClient = async (data) => {
+  try {
+    const details = [...data.details];
+    delete data.details;
+    const client = await db.query("UPDATE clients SET ? WHERE id_clients = ?", [
+      data,
+      data.id_clients,
+    ]);
+
+    const arr = await Promise.all(
+      details.map(async (detail) => await updateClientDetail(details))
+    );
+    console.log(arr);
+    console.log(client);
+    return client;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   findClient,
+  udpateClient,
 };

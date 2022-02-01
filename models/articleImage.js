@@ -17,6 +17,23 @@ const findArticleImage = async (id) => {
   }
 };
 
+const updateArticleImage = async (data) => {
+  try {
+    console.log("article image modele");
+    console.log(data);
+    const articleImage = await db.query(
+      "UPDATE articleImage SET ? WHERE id_articleImage = ?",
+      [data, data.id_articleImage]
+    );
+
+    console.log(articleImage);
+    return articleImage[0];
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   findArticleImage,
+  updateArticleImage,
 };
