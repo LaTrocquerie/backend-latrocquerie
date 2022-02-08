@@ -1,5 +1,5 @@
 const { findArticle } = require("./article");
-const { findAbonnement } = require("./abonnement");
+const { findAbonnement, deleteAbonnement } = require("./abonnement");
 const { findClient } = require("./client");
 const { findArticleImage } = require("./articleImage");
 const { findCategorie } = require("./categorie");
@@ -38,6 +38,17 @@ const findOne = async (nomdepage) => {
     console.error(error);
   }
 };
+
+const deleteOne = async (composant) => {
+  try {
+    const page = await db.query("SELECT * FROM pages WHERE nom = ?", [
+      composant,
+    ]);
+    const abonnement = await findAbonnement(page[0][0].id_pages);
+
+  }
+  
+}
 
 module.exports = {
   findOne,

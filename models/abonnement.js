@@ -62,7 +62,19 @@ const updateAbonnement = async (data) => {
   }
 };
 
+// ROUTE DELETE
+const deleteAbonnement = async (detail) => {
+  return await db
+    .query("DELETE FROM abonnements_details WHERE id_abonnements_details = ?", [
+      detail,
+      detail.id_abonnements_details,
+    ])
+    .then((res) => res)
+    .catch((err) => console.log(err));
+};
+
 module.exports = {
   findAbonnement,
   updateAbonnement,
+  deleteAbonnement,
 };
